@@ -9,10 +9,15 @@ class PlaceService {
 
   async getAll() {
     //const places = await this.context.getAll(this.collection, {});
-    const shapeFilePath = 'C:/Users/William/Desktop/provincias/PROVINCIAS.shp';
-    let dataset = gdal.open(shapeFilePath);
-    console.log(dataset);
-    return {} || {};
+    let dataset = gdal.open('shape/LINEA_FERREA.shp');
+
+    let json = null;
+
+    dataset.layers.get(0).features.forEach(function (feature) {
+      json = feature.getGeometry().toJSON();
+    });
+
+    return json || {};
   }
 
   async create({ place }) {
