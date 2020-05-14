@@ -8,7 +8,14 @@ class PlaceService {
   }
 
   async getAll() {
+    const query = await this.context.connect().then(db => {
+      return db.collection('places').find({});
+    });
+    // return await query.toArray();
+
     //const places = await this.context.getAll(this.collection, {});
+    //console.log(places);
+
     let dataset = gdal.open('shape/LINEA_FERREA.shp');
 
     let json = null;
